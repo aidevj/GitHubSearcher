@@ -26,7 +26,7 @@ final class APIService {
     // MARK: Get Users from API Call
     func getUsersFromApi(for search: String, completion: @escaping UserHandler) {
 
-        guard let url = DndAPI(search).userURL else {
+        guard let url = GitHubAPI(search).userURL else {
             completion(.failure(.badURL("Could not create Url")))
             return
         }
@@ -39,7 +39,7 @@ final class APIService {
 
             if let data = dat {
                 do {
-                    let response = try JSONDecoder().decode(MonsterResults.self, from: data)
+                    let response = try JSONDecoder().decode(UserResults.self, from: data)
                     let monsters = response.results
                     completion(.success(monsters))
                 } catch {

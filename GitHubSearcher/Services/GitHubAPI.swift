@@ -26,4 +26,3 @@ struct GitHubAPI {
         return URL(string: root + search + query)
     }
 }
-

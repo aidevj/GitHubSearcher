@@ -14,9 +14,15 @@ struct RepositoryResults: Decodable {
 }
 
 class Repository: Decodable {
+    var url: String
     var name: String
     var forkCount: Int
-    var stars: Int
+    var starsCount: Int
 
-    // TODO: Coding keys & initializer
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case url = "html_url"
+        case forkCount = "forks_count"
+        case starsCount = "stargazers_count"
+       }
 }

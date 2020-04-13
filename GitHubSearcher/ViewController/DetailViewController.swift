@@ -10,18 +10,26 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var detailTableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 }
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        return UITableViewCell.init()
+    }
+}
+
+extension DetailViewController: ViewModelDelegate {
+    func update() {
+        //TODO
     }
 }

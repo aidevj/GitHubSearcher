@@ -13,7 +13,6 @@ class RepoViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var forksCountLabel: UILabel!
     @IBOutlet weak var starsCountLabel: UILabel!
-    
+
     static let identifier = "RepoViewCell"
-    
 }
