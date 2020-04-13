@@ -21,3 +21,9 @@ class ViewModel {
         }
     }
 }
+
+extension ViewModel {
+    func getUsers(_ userName: String) {
+
+    }
+}

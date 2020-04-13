@@ -2,8 +2,8 @@
 //  Repository.swift
 //  GitHubSearcher
 //
-//  Created by Consultant on 4/10/20.
-//  Copyright © 2020 MAC. All rights reserved.
+//  Created by Aiden Melendez on 4/10/20.
+//  Copyright © 2020. All rights reserved.
 //
 // https://developer.github.com/v3/repos/
 

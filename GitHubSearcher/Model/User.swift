@@ -2,8 +2,8 @@
 //  User.swift
 //  GitHubSearcher
 //
-//  Created by Consultant on 4/10/20.
-//  Copyright © 2020 MAC. All rights reserved.
+//  Created by Aiden Melendez on 4/10/20.
+//  Copyright © 2020. All rights reserved.
 //
 // https://developer.github.com/v3/users/
 
@@ -24,7 +24,8 @@ class User: Decodable {
     var followingCount: Int?
     var biography: String?
     var reposURL: String?
-    //var reposCount : Int? //TODO: get number of items of in user repos url json
+    var reposCount: Int?
+    var avatarURL: String?
 
     private enum CodingKeys: String, CodingKey {
         case username = "login"
@@ -34,6 +35,8 @@ class User: Decodable {
         case followingCount = "following"
         case biography = "bio"
         case reposURL = "repos_url"
+        case reposCount = "public_repos"
+        case avatarURL = "avatar_url"
     }
 
     // Optional initializer
@@ -43,10 +46,13 @@ class User: Decodable {
             let _loc = dict["location"] as? String,
             let _join = dict["created_at"] as? String,
             let _follower = dict["followers"] as? Int,
-            let _following = dict["following"] as? Int, //let _following = dict[following] as? Int
+            let _following = dict["following"] as? Int,
             let _bio = dict["bio"] as? String,
-            let _repos = dict["repos_url"] as? String
-        else { return nil } // TODO: Do we need the coding keys if putting in dict keys as is (or vice versa)?
+            let _repoUrl = dict["repos_url"] as? String,
+            let _repoCount = dict["public_repos"] as? Int,
+            let _avatar = dict["avatar_url"] as? String
+        else { return nil } // Question: Do we need the coding keys if putting in dict keys as is (or vice versa)?
+                            // i.e. let _following = dict[following] as? Int
 
         self.username = _username
         self.email = _email
@@ -55,7 +61,9 @@ class User: Decodable {
         self.followerCount = _follower
         self.followingCount = _following
         self.biography = _bio
-        self.reposURL = _repos
+        self.reposURL = _repoUrl
+        self.reposCount = _repoCount
+        self.avatarURL = _avatar
     }
 
     // Custom initializer for Testing
@@ -66,15 +74,19 @@ class User: Decodable {
          followers: Int?,
          following: Int?,
          bio: String?,
-         repoURL: String?
+         repoURL: String?,
+         reposCount: Int?,
+         avaURL: String?
     ) {
         self.username = username ?? ""
         self.email = email ?? ""
         self.location = loc ?? ""
         self.joinDate = join ?? ""
-        self.followerCount = followers ?? nil   //0 if not optional
-        self.followingCount = following ?? nil  //0 if not optional
+        self.followerCount = followers ?? 0
+        self.followingCount = following ?? 0
         self.biography = bio ?? ""
         self.reposURL = repoURL ?? ""
+        self.reposCount = reposCount ?? 0
+        self.avatarURL = avaURL ?? nil
     }
 }

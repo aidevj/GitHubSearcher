@@ -14,11 +14,14 @@ class UserPreviewViewCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var repoCountLabel: UILabel!
 
-    var user: User! { //TODO: handle case where user data is nil
+    var user: User! {
         didSet {
-//            userAvatarImage.image =   //TODO: Get image from url
+            if let avatarAsUrl = URL(string: user.avatarURL!) {
+                userAvatarImage.load(url: avatarAsUrl)
+            }
+
             usernameLabel.text = user.username
-//            repoCountLabel.text
+            repoCountLabel.text = "Repos: \(user.reposCount ?? 0)"
         }
     }
 

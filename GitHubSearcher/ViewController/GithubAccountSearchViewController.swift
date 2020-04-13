@@ -24,9 +24,9 @@ class GithubAccountSearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Github Searcher"
         setupDummyData() //TODO: Erase for finalized API call
         setupTable()
+        setupNavigation()
     }
 
     private func setupTable() {
@@ -36,9 +36,14 @@ class GithubAccountSearchViewController: UIViewController {
 
         // Set View Model delegate
         viewModel.delegate = self
-        // TODO: Set up search bar
     }
 
+    private func setupNavigation() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Github Searcher"
+    }
+
+    // swiftlint:disable line_length
     private func setupDummyData() {
         userData = [
             User(username: "Test1",
@@ -48,7 +53,9 @@ class GithubAccountSearchViewController: UIViewController {
                  followers: 4,
                  following: 5,
                  bio: "No bio",
-                 repoURL: "https://testurl.com"),
+                 repoURL: "https://testurl.com",
+                 reposCount: 2,
+                 avaURL: "https://img.pngio.com/ceshi-test-testing-icon-with-png-and-vector-format-for-free-testing-png-512_512.png"),
             User(username: "Test2",
                  email: "test@test.com",
                  loc: "Tampa, Florida",
@@ -56,7 +63,9 @@ class GithubAccountSearchViewController: UIViewController {
                  followers: 4,
                  following: 5,
                  bio: "No bio",
-                 repoURL: "https://testurl.com"),
+                 repoURL: "https://testurl.com",
+                 reposCount: 5,
+                 avaURL: "https://img.pngio.com/ceshi-test-testing-icon-with-png-and-vector-format-for-free-testing-png-512_512.png"),
             User(username: "Test3",
                  email: "test@test.com",
                  loc: "Tampa, Florida",
@@ -64,7 +73,9 @@ class GithubAccountSearchViewController: UIViewController {
                  followers: 4,
                  following: 5,
                  bio: "No bio",
-                 repoURL: "https://testurl.com")
+                 repoURL: "https://testurl.com",
+                 reposCount: 11,
+                 avaURL: "https://img.pngio.com/ceshi-test-testing-icon-with-png-and-vector-format-for-free-testing-png-512_512.png")
         ]
     }
 }
@@ -84,6 +95,16 @@ extension GithubAccountSearchViewController: UITableViewDelegate, UITableViewDat
         cell.user = currentUser
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+//        let nextVC = storyboard?.instantiateViewController(withIdentifier: "DetailViewController")
+//            as! DetailViewController
+//        nextVC.viewModel = viewModel
+
+//        let selectedUser = viewModel.Users[indexPath.row]
+//        viewModel.currentUser = selectedUser
     }
 }
 
