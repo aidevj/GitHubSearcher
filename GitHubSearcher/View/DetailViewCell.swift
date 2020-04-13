@@ -22,7 +22,6 @@ class UserDetailViewCell: UITableViewCell {
 
     var user: User! {   //TODO: handle case if user data is nil
         didSet {
-//            avatarImageView.image =
             usernameLabel.text = user.username
             emailLabel.text = user.email
             locationLabel.text = user.location

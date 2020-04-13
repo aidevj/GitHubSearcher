@@ -24,9 +24,11 @@ class GithubAccountSearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDummyData() //TODO: Erase for finalized API call
+        //setupDummyData() //TODO: Erase for finalized API call
         setupTable()
         setupNavigation()
+
+        viewModel.getUsers("tom+repos:%3E42+followers:%3E1000")
     }
 
     private func setupTable() {
@@ -83,15 +85,15 @@ class GithubAccountSearchViewController: UIViewController {
 extension GithubAccountSearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return viewModel.users.count
-        return userData.count
+        return viewModel.users.count
+//        return userData.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserPreviewViewCell.identifier,
                                                  for: indexPath) as! UserPreviewViewCell
-//        let currentUser = viewModel.users[indexPath.row]
-        let currentUser = userData[indexPath.row]
+        let currentUser = viewModel.users[indexPath.row]
+//        let currentUser = userData[indexPath.row]
         cell.user = currentUser
 
         return cell
@@ -101,10 +103,19 @@ extension GithubAccountSearchViewController: UITableViewDelegate, UITableViewDat
         tableView.deselectRow(at: indexPath, animated: true)
 //        let nextVC = storyboard?.instantiateViewController(withIdentifier: "DetailViewController")
 //            as! DetailViewController
-//        nextVC.viewModel = viewModel
+
+//        nextVC.hidesBottomBarWhenPushed = true
 
 //        let selectedUser = viewModel.Users[indexPath.row]
+
 //        viewModel.currentUser = selectedUser
+//        navigationController?.view.backgroundColor = .none
+//        navigationController?.pushViewController(nextVC, animated: true)
+//        nextVC.viewModel = viewModel
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 

@@ -15,15 +15,25 @@ protocol ViewModelDelegate: class {
 class ViewModel {
     weak var delegate: ViewModelDelegate?
 
+    var currentUser: User!
+
     var users = [User]() {
         didSet {
-            //TODO
+            delegate?.update()
         }
     }
 }
 
 extension ViewModel {
     func getUsers(_ userName: String) {
-
+        API.getUsersFromApi(for: userName) { [weak self] apiResult in
+            switch apiResult {
+            case .success(let users):
+                self?.users = users
+                print("User Count: \(users.count)")
+            case .failure(let error):
+                print("API Failure: \(error.localizedDescription)")
+            }
+        }
     }
 }

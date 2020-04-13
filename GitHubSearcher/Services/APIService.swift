@@ -40,8 +40,8 @@ final class APIService {
             if let data = dat {
                 do {
                     let response = try JSONDecoder().decode(UserResults.self, from: data)
-                    let monsters = response.results
-                    completion(.success(monsters))
+                    let users = response.results
+                    completion(.success(users))
                 } catch {
                     completion(.failure(.badDecoder(error.localizedDescription)))
                     return
