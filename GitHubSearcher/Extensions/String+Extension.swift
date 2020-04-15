@@ -2,30 +2,35 @@
 //  String+Extension.swift
 //  GitHubSearcher
 //
-//  Created by Consultant on 4/12/20.
-//  Copyright © 2020 MAC. All rights reserved.
+//  Created by Aiden Melendez on 4/12/20.
+//  Copyright © 2020. All rights reserved.
 //
 
 import Foundation
 
-extension String {
-    func convertDateFormatter(date: String) -> String {
+extension DateFormatter {
+    static let makeDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
-        dateFormatter.locale = Locale(identifier: "your_loc_id")
-        let convertedDate = dateFormatter.date(from: date)
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter
+    }()
+    static let makeStringFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter
+    }()
+}
 
-        guard dateFormatter.date(from: date) != nil else {
-            assert(false, "no date from string")
-            return ""
-        }
-
-        dateFormatter.dateFormat = "yyyy MMM HH:mm EEEE"
-        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
-        let timeStamp = dateFormatter.string(from: convertedDate!)
-
-        return timeStamp
+extension String {
+    func toDate() -> Date? {
+        DateFormatter.makeDateFormatter.date(from: self)
+    }
+}
+extension Date {
+    func toString() -> String {
+        DateFormatter.makeStringFormatter.string(from: self)
     }
 
 }

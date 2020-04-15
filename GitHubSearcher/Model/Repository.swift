@@ -9,15 +9,11 @@
 
 import Foundation
 
-struct RepositoryResults: Decodable {
-    let results: [Repository]
-}
-
-class Repository: Decodable {
-    var url: String
-    var name: String
-    var forkCount: Int
-    var starsCount: Int
+struct Repository: Decodable {
+    let url: String
+    let name: String
+    let forkCount: Int
+    let starsCount: Int
 
     private enum CodingKeys: String, CodingKey {
         case name

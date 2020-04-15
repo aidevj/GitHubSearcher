@@ -20,7 +20,7 @@ class UserDetailViewCell: UITableViewCell {
 
     static let identifier = "DetailViewCell"
 
-    var user: User! {   //TODO: handle case if user data is nil
+    var user: User! {
         didSet {
             usernameLabel.text = user.username
             emailLabel.text = user.email

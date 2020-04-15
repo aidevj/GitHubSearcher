@@ -14,39 +14,48 @@ enum APIError: Error {
     case badDecoder(String)
 }
 
-typealias UserHandler = (Result<[User], APIError>) -> Void
+protocol APIServiceProtocol {
+    func get<T: Decodable>(type: T.Type,
+                           for url: URL,
+                           completion: @escaping (Result<T, APIError>) -> Void)
+    func get<T: Decodable>(type: T.Type,
+                           for urlString: String,
+                           completion: @escaping (Result<T, APIError>) -> Void)
+}
 
-let API = APIService.shared
+final class APIService: APIServiceProtocol {
 
-final class APIService {
-
-    static let shared = APIService()
-    private init() {}
-
-    // MARK: Get Users from API Call
-    func getUsersFromApi(for search: String, completion: @escaping UserHandler) {
-
-        guard let url = GitHubAPI(search).userURL else {
+    let session: URLSession
+    
+    init(_ session: URLSession = .init(configuration: .default)) {
+        self.session = session
+    }
+    
+    func get<T: Decodable>(type: T.Type, for urlString: String, completion: @escaping (Result<T, APIError>) -> Void) {
+        guard let url = URL(string: urlString) else {
             completion(.failure(.badURL("Could not create Url")))
             return
         }
+        get(type: type, for: url, completion: completion)
+    }
 
-        URLSession.shared.dataTask(with: url) { (dat, _, err) in
+    func get<T: Decodable>(type: T.Type, for url: URL, completion: @escaping (Result<T, APIError>) -> Void) {
+        session.dataTask(with: url) { (dat, _, err) in
             if let error = err {
                 completion(.failure(.badDataTask("Bad Data Task: \(error.localizedDescription)")))
                 return
             }
-
-            if let data = dat {
-                do {
-                    let response = try JSONDecoder().decode(UserResults.self, from: data)
-                    let users = response.results
-                    completion(.success(users))
-                } catch {
-                    completion(.failure(.badDecoder(error.localizedDescription)))
-                    return
-                }
+            guard let data = dat else {
+                completion(.failure(.badDataTask("No data returned")))
+                return
+            }
+            do {
+                let response = try JSONDecoder().decode(T.self, from: data)
+                completion(.success(response))
+            } catch {
+                print(error)
+                completion(.failure(.badDecoder(error.localizedDescription)))
             }
         }.resume()
-    } // END - getUsersFromApi func
+    }
 }

@@ -16,21 +16,9 @@ class UserDetailViewCell: UITableViewCell {
     @IBOutlet weak var joinDateLabel: UILabel!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingCountLabel: UILabel!
-
-    static let identifier = "DetailViewCell"
-
-    var user: User! {
-        didSet {
-            if let avatarAsUrl = URL(string: user.avatarURL!) {
-                avatarImageView.load(url: avatarAsUrl)
-            }
-
-            usernameLabel.text = user.username
-            emailLabel.text = user.email
-            locationLabel.text = user.location
-            joinDateLabel.text = user.joinDate
-            followersCountLabel.text = user.followerCount?.toString()
-            followingCountLabel.text = user.followingCount?.toString()
-        }
-    }
+    @IBOutlet weak var biographyLabel: UILabel!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    static let identifier = "UserDetailViewCell"
 }
